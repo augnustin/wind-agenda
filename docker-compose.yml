@@ -1,0 +1,14 @@
+version: "2.11.1"
+
+services:
+  app:
+    image: node:latest
+    command: yarn start
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    restart: always
+    env_file:
+      - .env
