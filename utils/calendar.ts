@@ -1,6 +1,7 @@
 import ical from "ical-generator";
 import type { WeatherDatum } from "./api";
 import type { Coords } from "./geo";
+import { find } from "geo-tz";
 
 const STRONG_WIND_SPEED = 25;
 
@@ -17,7 +18,7 @@ export const getMSInterval = (date1: Date, date2: Date = new Date()) => {
 };
 
 export const generateCalendar = (weatherDataGroups: WeatherDatum[][], { lat, lng }: Coords) => {
-  const cal = ical({ name: "Prévisions de vent" });
+  const cal = ical({ name: "Prévisions de vent", timezone: find(lat, lng).at(0) });
 
   weatherDataGroups.forEach((weatherDataGroup) => {
     const start = weatherDataGroup.at(0).time;
@@ -31,11 +32,9 @@ export const generateCalendar = (weatherDataGroups: WeatherDatum[][], { lat, lng
       start,
       end,
       summary: avgWind > STRONG_WIND_SPEED ? "🌬️🌬️ Ça souffle fort !!" : "🌬️ Ça souffle !",
-      description: `Entre ${minWind.toFixed(0)} et ${maxWind.toFixed(0)} noeuds établis, ${avgWind.toFixed(
+      description: `Entre ${minWind.toFixed(0)} et ${maxWind.toFixed(0)} nœuds établis, ${avgWind.toFixed(
         0
-      )} noeuds en moyenne.
-
-      Détails: https://www.windy.com/${lat}/${lng}?icon,${getDate(start)},${lat},${lng},12`,
+      )} nœuds en moyenne.\n\nDétails: https://www.windy.com/${lat}/${lng}?icon,${getDate(start)},${lat},${lng},12`,
     });
   });
 

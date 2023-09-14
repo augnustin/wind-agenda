@@ -35,6 +35,7 @@ app.get("/cal", queryParamsCheck, async (_req: Request, res: Response) => {
   const result = await fetchFormattedStormglassAPI(res.locals.coords, res.locals.refresh);
   const intervals = extractWindIntervals(
     result,
+    res.locals.coords,
     { min: res.locals.minWindSpeed, max: res.locals.maxWindSpeed },
     MIN_CONSECUTIVE_HOURS
   );
