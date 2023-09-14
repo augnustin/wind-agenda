@@ -43,5 +43,5 @@ app.get("/cal", async (_req: Request, res: Response) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`Wind calendar listening on port ${PORT}`);
 });
