@@ -17,7 +17,7 @@ export const getMSInterval = (date1: Date, date2: Date = new Date()) => {
 };
 
 export const generateCalendar = (weatherDataGroups: WeatherDatum[][], { lat, lng }: Coords) => {
-  const cal = ical();
+  const cal = ical({ name: "Prévisions de vent" });
 
   weatherDataGroups.forEach((weatherDataGroup) => {
     const start = weatherDataGroup.at(0).time;

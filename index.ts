@@ -21,17 +21,17 @@ cron.schedule("0 0 * * *", async () => {
 
 const app: Express = express();
 
-app.use(queryParamsCheck);
+app.use(express.static("public"));
 
-app.get("/", async (_req: Request, res: Response) => {
+app.get("/json", queryParamsCheck, async (_req: Request, res: Response) => {
   res.json(await fetchFormattedStormglassAPI(res.locals.coords, res.locals.refresh));
 });
 
-app.get("/raw", async (_req: Request, res: Response) => {
+app.get("/raw", queryParamsCheck, async (_req: Request, res: Response) => {
   res.json(await fetchStormglassAPIWithCache(res.locals.coords, res.locals.refresh));
 });
 
-app.get("/cal", async (_req: Request, res: Response) => {
+app.get("/cal", queryParamsCheck, async (_req: Request, res: Response) => {
   const result = await fetchFormattedStormglassAPI(res.locals.coords, res.locals.refresh);
   const intervals = extractWindIntervals(
     result,
@@ -39,7 +39,7 @@ app.get("/cal", async (_req: Request, res: Response) => {
     MIN_CONSECUTIVE_HOURS
   );
   const iCal = generateCalendar(intervals, res.locals.coords).toString();
-  res.end(iCal);
+  res.set({ "content-type": "text/calendar; charset=utf-8" }).end(iCal);
 });
 
 app.listen(PORT, () => {
