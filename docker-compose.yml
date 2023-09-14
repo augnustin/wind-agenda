@@ -3,7 +3,7 @@ version: "3"
 services:
   app:
     image: node:latest
-    command: yarn start
+    command: yarn install && yarn start
     working_dir: /app
     volumes:
       - .:/app
