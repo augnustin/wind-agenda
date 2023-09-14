@@ -1,4 +1,8 @@
 import ical from "ical-generator";
+import type { WeatherDatum } from "./api";
+import type { Coords } from "./geo";
+
+const STRONG_WIND_SPEED = 25;
 
 const addHour = (date: Date): Date => {
   const result = date;
@@ -12,22 +16,26 @@ export const getMSInterval = (date1: Date, date2: Date = new Date()) => {
   return date2.getTime() - date1.getTime();
 };
 
-export const generateCalendar = (groups) => {
+export const generateCalendar = (weatherDataGroups: WeatherDatum[][], { lat, lng }: Coords) => {
   const cal = ical();
 
-  groups.forEach((group) => {
-    const start = group.at(0).time;
-    const end = addHour(group.at(-1).time);
-    const maxWind = group.reduce((res, { wind }) => (wind > res ? wind : res), 0);
-    const minWind = group.reduce((res, { wind }) => (wind < res ? wind : res), group[0].wind);
+  weatherDataGroups.forEach((weatherDataGroup) => {
+    const start = weatherDataGroup.at(0).time;
+    const end = addHour(weatherDataGroup.at(-1).time);
+    const winds = weatherDataGroup.map(({ wind }) => wind);
+    const maxWind = Math.max(...winds);
+    const minWind = Math.min(...winds);
+    const avgWind = winds.reduce((total, b, _i, arr) => total + b / arr.length, 0);
 
     cal.createEvent({
       start,
       end,
-      summary: "🌬️ Ça souffle !!",
-      description: `Entre ${minWind} et ${maxWind} noeuds établis`,
-      organizer: { name: "Eole, le dieu du vent" },
-      url: `https://www.windy.com/42.604/3.052?icon,${getDate(start)},42.575,3.052,12`,
+      summary: avgWind > STRONG_WIND_SPEED ? "🌬️🌬️ Ça souffle fort !!" : "🌬️ Ça souffle !",
+      description: `Entre ${minWind.toFixed(0)} et ${maxWind.toFixed(0)} noeuds établis, ${avgWind.toFixed(
+        0
+      )} noeuds en moyenne.`,
+      organizer: { name: "Eole, dieu du vent" },
+      url: `https://www.windy.com/${lat}/${lng}?icon,${getDate(start)},${lat},${lng},12`,
     });
   });
 

@@ -1,8 +1,13 @@
 import { getMSInterval } from "./calendar";
+import type { WeatherDatum } from "./api";
 
-export const meterPerSecondToKnots = (msSpeed: number): number => msSpeed * 1.9438445; // TODO: find a better formula
+export const meterPerSecondToKnots = (msSpeed: number): number => msSpeed * 1.9438445; // TODO?: find a better formula
 
-export const extractWindIntervals = (weatherData, { min, max }, minIntervalLength) => {
+export const extractWindIntervals = (
+  weatherData: WeatherDatum[],
+  { min, max }: { min: number; max: number },
+  minIntervalLength: number
+): WeatherDatum[][] => {
   return weatherData
     .filter(({ wind }) => wind >= min && wind <= max)
     .reduce((result, hour) => {

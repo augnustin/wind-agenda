@@ -7,7 +7,7 @@ import { extractWindIntervals } from "./utils/weather";
 
 const PORT = process.env.PORT || 3000;
 
-const MIN_CONSECUTIVE_HOURS = 3; // Make it dynamic?
+const MIN_CONSECUTIVE_HOURS = 4; // Make it dynamic?
 
 const app: Express = express();
 
@@ -28,8 +28,7 @@ app.get("/cal", async (_req: Request, res: Response) => {
     { min: res.locals.minWindSpeed, max: res.locals.maxWindSpeed },
     MIN_CONSECUTIVE_HOURS
   );
-  // res.json(intervals);
-  const iCal = generateCalendar(intervals).toString();
+  const iCal = generateCalendar(intervals, res.locals.coords).toString();
   res.end(iCal);
 });
 

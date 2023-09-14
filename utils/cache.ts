@@ -1,15 +1,12 @@
 import { promises as fs } from "fs";
 
-const toCachePath = (filename: string): string => `../cache/${filename}.json`;
+const toCachePath = (filename: string): string => `./cache/${filename}.json`;
 
 export const lastModifiedAt = async (filename: string): Promise<Date | null> => {
   try {
     const stats = await fs.stat(toCachePath(filename));
-    console.log(stats);
     return stats.mtime;
   } catch (err) {
-    console.info(err);
-    return null;
     if (err.code === "ENOENT") return null;
     throw err;
   }

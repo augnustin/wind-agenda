@@ -1,18 +1,18 @@
 import { Request, Response, NextFunction } from "express";
-import { roundCoords, isLatitude, isLongitude } from "./geo";
+import { isLatitude, isLongitude } from "./geo";
 import type { Coords } from "./geo";
 
 type QueryParams = { coords: Coords; refresh?: boolean; minWindSpeed?: number; maxWindSpeed?: number };
 
-const parseQueryParams = (queryParams): QueryParams => {
+const parseQueryParams = ({ lat, lng, refresh, minWindSpeed, maxWindSpeed }): QueryParams => {
   return {
     coords: {
-      lat: parseFloat(queryParams.lat),
-      lng: parseFloat(queryParams.lng),
+      lat: parseFloat(lat),
+      lng: parseFloat(lng),
     },
-    refresh: queryParams !== undefined,
-    minWindSpeed: parseInt(queryParams.minWindSpeed) || 15,
-    maxWindSpeed: parseInt(queryParams.maxWindSpeed) || 50,
+    refresh: refresh !== undefined,
+    minWindSpeed: parseInt(minWindSpeed) || 15,
+    maxWindSpeed: parseInt(maxWindSpeed) || 50,
   };
 };
 
