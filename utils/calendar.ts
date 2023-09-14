@@ -14,7 +14,7 @@ const addHour = (date: Date): Date => {
 const zeroPad = (num: number, places: number): string => String(num).padStart(places, "0");
 
 const getDate = (date: Date): String =>
-  `${date.getFullYear()}${zeroPad(date.getMonth() + 1, 2)}${zeroPad(date.getDay(), 2)}`;
+  `${date.getFullYear()}${zeroPad(date.getMonth() + 1, 2)}${zeroPad(date.getDate(), 2)}`;
 
 export const getMSInterval = (date1: Date, date2: Date = new Date()) => {
   return date2.getTime() - date1.getTime();
