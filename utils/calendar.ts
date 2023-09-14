@@ -34,7 +34,6 @@ export const generateCalendar = (weatherDataGroups: WeatherDatum[][], { lat, lng
       description: `Entre ${minWind.toFixed(0)} et ${maxWind.toFixed(0)} noeuds établis, ${avgWind.toFixed(
         0
       )} noeuds en moyenne.`,
-      organizer: { name: "Eole, dieu du vent" },
       url: `https://www.windy.com/${lat}/${lng}?icon,${getDate(start)},${lat},${lng},12`,
     });
   });
