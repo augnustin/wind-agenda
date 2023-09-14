@@ -33,8 +33,9 @@ export const generateCalendar = (weatherDataGroups: WeatherDatum[][], { lat, lng
       summary: avgWind > STRONG_WIND_SPEED ? "🌬️🌬️ Ça souffle fort !!" : "🌬️ Ça souffle !",
       description: `Entre ${minWind.toFixed(0)} et ${maxWind.toFixed(0)} noeuds établis, ${avgWind.toFixed(
         0
-      )} noeuds en moyenne.`,
-      url: `https://www.windy.com/${lat}/${lng}?icon,${getDate(start)},${lat},${lng},12`,
+      )} noeuds en moyenne.
+
+      Détails: https://www.windy.com/${lat}/${lng}?icon,${getDate(start)},${lat},${lng},12`,
     });
   });
 
