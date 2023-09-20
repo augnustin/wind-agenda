@@ -1,14 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>HTML 5 Boilerplate</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Wind Calendar</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.ie.css" />
+    <![endif]-->
   </head>
-  <body>
-    <h1>Wind Calendar</h1>
-    <script src="index.js"></script>
+  <body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+      <div class="container px-5">
+        <a class="navbar-brand fw-bold" href="#page-top">Wind Calendar</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          Menu
+          <i class="bi-list"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+            <li class="nav-item"><a class="nav-link me-lg-3" href="#config">Configurer mon agenda</a></li>
+          </ul>
+          <a href="https://augustin-riedinger.fr/contact" target="_blank" class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">
+            <span class="d-flex align-items-center">
+              <i class="bi-chat-text-fill me-2"></i>
+              <span class="small">Me contacter</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </nav>
+    <!-- Mashead header-->
+    <header class="masthead" style="background-image: url('https://source.unsplash.com/GW0xfjw3IMg/1500x800'); background-size: cover;">
+      <div class="container px-5">
+        <div class="row gx-5 align-items-center">
+          <div class="col-lg-6">
+            <!-- Mashead text and app badges-->
+            <div class="mb-5 mb-lg-0 text-center text-lg-start">
+              <h1 class="display-1 lh-1 text-white mb-3">Ne manquez plus aucune session</h1>
+              <p class="lead fw-normal text-muted mb-5">
+                Abonnez-vous à l'agenda qui vous avertira des prochaines session de vent à prévoir sur votre spot !
+              </p>
+              <div class="d-flex flex-column flex-lg-row align-items-center">
+                <button class="btn btn-primary btn-lg rounded-pill">
+                  Configurez le vôtre
+                  <i class="bi-arrow-down"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6"><img src="assets/img/wind-calendar-screenshot.jpg" class="img-fluid" /></div>
+        </div>
+      </div>
+    </header>
+    <!-- Basic features section-->
+    <section class="bg-light" id="config">
+      <div class="container px-5">
+        <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
+          <div class="col-12">
+            <h2 class="display-4 mb-4">
+              Configuration
+            </h2>
+          </div>
+          <div class="col-12 text-center">
+
+            <div class="mb-4">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">1. Selectionnez votre spot</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">2. Quelques paramètres supplémentaires</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">3. Importez cette URL dans votre agenda</button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                <div id="map" style="height: 600px" class="mb-2"></div>
+                <p class="mb-4"><em>Cliquez ou glissez-déposez le marker sur votre spot</em></p>
+                <button class="btn btn-primary rounded-pill" data-bs-toggle="tab" data-bs-target="#profile-tab-pane">Valider le spot</button>
+              </div>
+              <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                <div class="container px-5">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="mb-3">
+                        <label for="customRange1" class="form-label">Vent minimum (en noeuds)</label>
+                        <input type="range" class="form-range" id="customRange1" min="5" max="60">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="mb-3">
+                        <label for="customRange2" class="form-label">Vent fort (en noeuds)</label>
+                        <input type="range" class="form-range" id="customRange2" min="5" max="60">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="mb-3">
+                        <label for="customRange3" class="form-label">Vent maximum (en noeuds)</label>
+                        <input type="range" class="form-range" id="customRange3" min="5" max="60">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                <input class="form-control form-control-lg" value="https://wind-calendar.augustin-riedinger.fr/cal?lat=xxx&lng=xxx"></input>
+
+                <p>Ex: dans Google Calendar, faites Paramètres > Ajouter un agenda > A partir de l'URL , puis collez l'URL ci-dessus.</p>
+                <img src="assets/img/import-calendar.jpg" class="img-fluid" />
+              </div>
+              <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Footer-->
+    <footer class="bg-black text-center py-5">
+      <div class="container px-5">
+        <div class="text-white-50 small">
+          <div class="mb-2"> Made with <i class="bi-heart"></i> by <a href="https://augustin-riedinger.fr" target="_blank">Augustin Riedinger</a></div>
+        </div>
+      </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+    <script src="./js/scripts.js"></script>
+
   </body>
 </html>

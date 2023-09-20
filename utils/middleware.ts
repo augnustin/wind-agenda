@@ -2,9 +2,15 @@ import { Request, Response, NextFunction } from "express";
 import { isLatitude, isLongitude } from "./geo";
 import type { Coords } from "./geo";
 
-type QueryParams = { coords: Coords; refresh?: boolean; minWindSpeed?: number; maxWindSpeed?: number };
+type QueryParams = {
+  coords: Coords;
+  refresh?: boolean;
+  minWindSpeed?: number;
+  strongWindSpeed?: number;
+  maxWindSpeed?: number;
+};
 
-const parseQueryParams = ({ lat, lng, refresh, minWindSpeed, maxWindSpeed }): QueryParams => {
+const parseQueryParams = ({ lat, lng, refresh, minWindSpeed, strongWindSpeed, maxWindSpeed }): QueryParams => {
   return {
     coords: {
       lat: parseFloat(lat),
@@ -12,6 +18,7 @@ const parseQueryParams = ({ lat, lng, refresh, minWindSpeed, maxWindSpeed }): Qu
     },
     refresh: refresh !== undefined,
     minWindSpeed: parseInt(minWindSpeed) || 15,
+    strongWindSpeed: parseInt(strongWindSpeed) || 25,
     maxWindSpeed: parseInt(maxWindSpeed) || 50,
   };
 };

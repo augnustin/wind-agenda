@@ -1,0 +1,8 @@
+body {
+  text-align: center;
+}
+
+#osm-map {
+  height: 75vh;
+  width: 100%;
+}

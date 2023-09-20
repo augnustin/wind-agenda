@@ -39,7 +39,7 @@ app.get("/cal", queryParamsCheck, async (_req: Request, res: Response) => {
     { min: res.locals.minWindSpeed, max: res.locals.maxWindSpeed },
     MIN_CONSECUTIVE_HOURS
   );
-  const iCal = generateCalendar(intervals, res.locals.coords).toString();
+  const iCal = generateCalendar(intervals, res.locals.coords, res.locals.strongWindSpeed).toString();
   res.set({ "content-type": "text/calendar; charset=utf-8" }).end(iCal);
 });
 

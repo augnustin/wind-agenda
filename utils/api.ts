@@ -27,14 +27,17 @@ const coordsToCacheFileName = (coords: Coords): string =>
   `lat${(coords.lat * 100).toFixed(0)}lng${(coords.lng * 100).toFixed(0)}`;
 
 const doFetchStormglassAPI = async (coords: Coords): Promise<StormglassData> => {
-  const API_PARAMS = "windSpeed";
+  const API_PARAMS = ["windSpeed", "gust"];
 
   try {
-    const response = await fetch(`${STORMGLASS_API_URL}?lat=${coords.lat}&lng=${coords.lng}&params=${API_PARAMS}`, {
-      headers: {
-        Authorization: STORMGLASS_API_KEY,
-      },
-    });
+    const response = await fetch(
+      `${STORMGLASS_API_URL}?lat=${coords.lat}&lng=${coords.lng}&params=${API_PARAMS.join(",")}`,
+      {
+        headers: {
+          Authorization: STORMGLASS_API_KEY,
+        },
+      }
+    );
     const result = await response.json();
     try {
       await write(coordsToCacheFileName(coords), result);
