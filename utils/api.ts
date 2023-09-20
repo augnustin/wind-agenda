@@ -1,25 +1,8 @@
+import type { Coords, StormglassData, WeatherDatum } from "./types";
+import { DAY } from "./constants";
 import { read, write, lastModifiedAt } from "./cache";
-import type { Coords } from "./geo";
-import { meterPerSecondToKnots } from "./weather";
+import { meterPerSecondToKnots } from "./geo";
 import { getMSInterval } from "./calendar";
-
-type StormglassData = {
-  hours: [
-    {
-      time: string;
-      windSpeed: {
-        sg: number;
-        icon?: number;
-        noaa?: number;
-      };
-    }
-  ];
-};
-
-export type WeatherDatum = {
-  time: Date;
-  wind: number;
-};
 
 const { STORMGLASS_API_URL, STORMGLASS_API_KEY } = process.env;
 
@@ -27,7 +10,7 @@ const coordsToCacheFileName = (coords: Coords): string =>
   `lat${(coords.lat * 100).toFixed(0)}lng${(coords.lng * 100).toFixed(0)}`;
 
 const doFetchStormglassAPI = async (coords: Coords): Promise<StormglassData> => {
-  const API_PARAMS = ["windSpeed", "gust"];
+  const API_PARAMS = ["windSpeed", "windDirection", "gust"];
 
   try {
     const response = await fetch(
@@ -55,19 +38,20 @@ const doFetchStormglassAPI = async (coords: Coords): Promise<StormglassData> => 
 };
 
 const formatStormglassAPI = (result: StormglassData): WeatherDatum[] => {
-  return result.hours.map(({ time, windSpeed: { sg } }) => ({
+  return result.hours.map(({ time, windSpeed: { sg: msWindSpeed }, windDirection: { sg: direction } }) => ({
     time: new Date(time),
-    wind: meterPerSecondToKnots(sg),
+    wind: meterPerSecondToKnots(msWindSpeed),
+    direction,
   }));
 };
 
 export const fetchStormglassAPIWithCache = async (coords: Coords, forceRefresh = false): Promise<StormglassData> => {
   const lastModified = await lastModifiedAt(coordsToCacheFileName(coords));
-  if (forceRefresh || !lastModified || getMSInterval(lastModified) > 3600 * 1000 * 24) {
-    console.info("New API call");
+  if (forceRefresh || !lastModified || getMSInterval(lastModified) > DAY) {
+    console.info(new Date(), "New API call");
     return await doFetchStormglassAPI(coords);
   }
-  console.info("Using cache");
+  console.info(new Date(), "Using cache");
   return (await read(coordsToCacheFileName(coords))) as StormglassData;
 };
 
