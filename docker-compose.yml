@@ -9,6 +9,5 @@ services:
       - .:/app
     ports:
       - ${PORT}:${PORT}
-    restart: always
     env_file:
       - .env
