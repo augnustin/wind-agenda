@@ -1,9 +1,10 @@
 import SunCalc from "suncalc";
 
-import { CIRCLE_360, CARDINAL_POINTS, CARDINAL_SYMBOLS, HOUR, MIN_CONSECUTIVE_HOURS } from "./constants";
-import type { Coords, CardinalPoint, CardinalSymbol, WeatherDatum } from "./types";
+import { CIRCLE_360, CARDINAL_SYMBOLS, HOUR, MIN_CONSECUTIVE_HOURS } from "./constants";
+import type { Coords, CardinalSymbol, UserPreferences, WeatherDatum } from "./types";
 
-import { getMSInterval } from "./calendar";
+import { getMSInterval, isBefore, isAfter } from "./calendar";
+import { circularIndex } from "./array";
 
 export const meterPerSecondToKnots = (msSpeed: number): number => msSpeed * 1.9438445; // TODO?: find a better formula
 
@@ -22,31 +23,18 @@ export const roundCoords = ({ lat, lng }: Coords): Coords => {
   };
 };
 
-export const directionToCardinalPoint = (direction: number): CardinalPoint => {
-  const index =
-    Math.round(((direction %= CIRCLE_360) < 0 ? direction + 360 : direction) / CIRCLE_360 / CARDINAL_POINTS.length) %
-    CARDINAL_POINTS.length;
-  return CARDINAL_POINTS[index];
-};
-
-export const directionToCardinalSymbol = (direction: number): CardinalSymbol => {
-  const index =
-    Math.round(
-      ((direction %= CIRCLE_360) < 0 ? direction + CIRCLE_360 : direction) / CIRCLE_360 / CARDINAL_SYMBOLS.length
-    ) % CARDINAL_SYMBOLS.length;
-  return CARDINAL_SYMBOLS[index];
-};
+export const directionToCardinalSymbol = (direction: number): CardinalSymbol =>
+  circularIndex(CARDINAL_SYMBOLS, CIRCLE_360, direction);
 
 export const extractWindIntervals = (
   weatherData: WeatherDatum[],
   { lat, lng }: Coords,
-  { min, max }: { min: number; max: number }
+  { minWindSpeed, maxWindSpeed }: UserPreferences
 ): WeatherDatum[][] => {
   return weatherData
     .filter(({ wind, time }) => {
       const { sunrise, sunset } = SunCalc.getTimes(time, lat, lng);
-
-      return time > sunrise && time < sunset && wind >= min && wind <= max;
+      return isAfter(time, sunrise) && isBefore(time, sunset) && wind >= minWindSpeed && wind <= maxWindSpeed;
     })
     .reduce((result, hour) => {
       const previousGroups = result.slice(0, -1);

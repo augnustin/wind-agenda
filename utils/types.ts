@@ -1,4 +1,4 @@
-import { CARDINAL_POINTS, CARDINAL_SYMBOLS } from "./constants";
+import { CARDINAL_SYMBOLS } from "./constants";
 
 export type Coords = {
   lat: number;
@@ -14,9 +14,10 @@ export interface UserPreferences {
 export type QueryParams = {
   [P in keyof Coords]: string;
 } & {
-  refresh?: boolean;
-} & {
-  [P in keyof UserPreferences]?: string;
+  refresh?: string;
+  min?: string;
+  max?: string;
+  strong?: string;
 };
 
 export type ParsedQueryParams = {
@@ -49,5 +50,4 @@ export type WeatherDatum = {
   direction: number;
 };
 
-export type CardinalPoint = (typeof CARDINAL_POINTS)[number];
 export type CardinalSymbol = (typeof CARDINAL_SYMBOLS)[number];
