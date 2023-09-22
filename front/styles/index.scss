@@ -1,0 +1,70 @@
+@import "./bootstrap.scss";
+
+.masthead {
+  // background-color: #f8f9fa;
+  // padding-top: 10rem;
+  // padding-bottom: 8rem;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+
+  &:before,
+  &:after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    content: "";
+  }
+
+  &:before {
+    background-image: url("../assets/img/windsurf.jpg");
+    background-size: cover;
+    @include media-breakpoint-down("md") {
+      background-position: -10rem;
+    }
+    z-index: -2;
+  }
+
+  &:after {
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+  }
+  // .masthead-container {
+  //   display: flex;
+
+  // }
+
+  .masthead-content {
+    display: flex;
+    min-height: 60vh;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-top: 2rem;
+    @include media-breakpoint-down("md") {
+      margin-top: 5rem;
+    }
+
+    h1 {
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+aside,
+section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+#map {
+  height: 75vh;
+
+  .leaflet-container {
+    height: 100%;
+  }
+}

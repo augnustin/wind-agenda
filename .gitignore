@@ -3,3 +3,6 @@ yarn.lock
 .env
 cache/*.json
 docker-compose.override.yml
+dist/*
+!dist/.gitkeep
+.parcel-cache

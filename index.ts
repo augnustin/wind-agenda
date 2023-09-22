@@ -20,7 +20,7 @@ cron.schedule("0 0 * * *", async () => {
 
 const app: Express = express();
 
-app.use(express.static("public"));
+app.use(express.static("dist"));
 
 app.get("/json", queryParamsCheck, async (_req: Request, res: Response) => {
   res.json(await fetchFormattedStormglassAPI(res.locals.coords, res.locals.forceRefresh));
