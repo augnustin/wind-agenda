@@ -56,7 +56,7 @@ export const generateCalendar = (
       end,
       summary: avgWind >= preferences.strongWindSpeed ? "🌬️🌬️ Ça souffle fort !!" : "🌬️ Ça souffle !",
       description: [
-        `Entre ${minWind.toFixed(0)} et ${maxWind.toFixed(0)} nœuds établis, ${avgWind.toFixed(0)} nœuds.`,
+        `Entre ${minWind.toFixed(0)} et ${maxWind.toFixed(0)} nœuds établis, ${avgWind.toFixed(0)} nœuds en moyenne.`,
         `Évolution : ${generateSymbols(weatherDataGroup, preferences).join("")}`,
         `Détails: https://www.windy.com/${lat}/${lng}?arome,${getDate(start)},${lat},${lng},11`,
       ].join("\n\n"),
