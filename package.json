@@ -6,7 +6,7 @@
   "scripts": {
     "back": "nodemon --ignore ./cache --ignore ./front",
     "front": "parcel serve front/index.html --public-url / --dist-dir dist",
-    "start": "yarn install && parcel build && ts-node index.ts"
+    "start": "yarn install && parcel build front/index.html --public-url / --dist-dir dist && ts-node index.ts"
   },
   "dependencies": {
     "@types/node": "^20.6.0",
