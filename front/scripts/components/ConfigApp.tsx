@@ -23,6 +23,11 @@ const App = () => {
     });
   };
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText((document.getElementById("output") as HTMLInputElement).value);
+    setIsCopied(true);
+  };
+
   useEffect(() => {
     setIsCopied(false);
   }, [coords, min, strong, max]);
@@ -52,14 +57,7 @@ const App = () => {
           readOnly
           onClick={(event) => event.target.select()}
         ></input>
-        <button
-          className="input-group-text"
-          title="Copier dans le presse-papier"
-          onClick={() => {
-            navigator.clipboard.writeText(document.getElementById("output").value);
-            setIsCopied(true);
-          }}
-        >
+        <button className="input-group-text" title="Copier dans le presse-papier" onClick={copyToClipboard}>
           {isCopied ? (
             <span>
               <i className="bi-check"></i>
