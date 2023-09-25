@@ -28,9 +28,7 @@
     "styled-components": "^6.0.8",
     "suncalc": "^1.9.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
-  },
-  "devDependencies": {
+    "typescript": "^5.2.2",
     "@parcel/packager-raw-url": "2.9.3",
     "@parcel/transformer-webmanifest": "2.9.3"
   }
