@@ -1,5 +1,12 @@
 @import "./bootstrap.scss";
 
+.navbar {
+  background-color: transparent;
+  height: 5rem;
+  width: 100%;
+  position: absolute;
+}
+
 .masthead {
   // background-color: #f8f9fa;
   // padding-top: 10rem;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Map from "./Map";
 import Slider from "./Slider";
+import HelpModal from "./HelpModal";
 
 const HOST_NAME = window.location.origin;
 const GRUISSAN_COORDS = [43.09, 3.12];
@@ -12,6 +13,7 @@ const App = () => {
   const [strong, setStrong] = useState(DEFAULT_WIND_STRENGTHS[1]);
   const [max, setMax] = useState(DEFAULT_WIND_STRENGTHS[2]);
   const [isCopied, setIsCopied] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
   const setValue = [setMin, setStrong, setMax];
   const [lat, lng] = coords;
 
@@ -71,6 +73,13 @@ const App = () => {
           )}
         </button>
       </div>
+      <div className="text-center my-5">
+        <h6 className="mb-4">Bravo, c'est terminé !</h6>
+        <button className="btn btn-link" onClick={(e) => setShowHelp(true)}>
+          Heu ... Où est-ce que je colle ce lien ?
+        </button>
+      </div>
+      <HelpModal open={showHelp} onClose={(e) => setShowHelp(false)} />
     </div>
   );
 };

@@ -39,18 +39,18 @@ const sliderBackground = (index) => {
 const StyledTrack = styled.div`
   top: 0;
   bottom: 0;
-  background: ${(props) => sliderBackground(props.index)};
+  background: ${(props) => sliderBackground(props["data-index"])};
   border-radius: 999px;
   text-align: center;
   font-size: 0.75rem;
   &:after {
-    content: "${(props) => sliderLabel(props.index)}";
+    content: "${(props) => sliderLabel(props["data-index"])}";
     position: relative;
     bottom: -2rem;
   }
 `;
 
-const Track = (props, state) => <StyledTrack {...props} index={state.index} />;
+const Track = (props, state) => <StyledTrack {...props} data-index={state.index} />;
 
 export default (props) => {
   return <StyledSlider renderTrack={Track} renderThumb={Thumb} {...props} />;
