@@ -37,19 +37,19 @@ const App = () => {
   return (
     <div>
       <p>
-        <strong>1. Positionne l'icône sur ton spot</strong>
+        <strong>1. Positionnez l'icône sur votre spot</strong>
       </p>
       <div className="my-4">
         <Map coords={coords} setCoords={setCoords} initialZoom={13} />
       </div>
       <p>
-        <strong>2. Ajuste la fenêtre de vent qui t'intéresse (en nœuds)</strong>
+        <strong>2. Ajustez la fenêtre de vent qui vous intéresse (en nœuds)</strong>
       </p>
       <div className="my-5">
         <Slider value={[min, strong, max]} min={0} max={75} onChange={onRangeChange} />
       </div>
       <p>
-        <strong>3. Copie/colle le lien ci-dessous dans ton agenda</strong>
+        <strong>3. Copiez/collez le lien ci-dessous dans votre agenda</strong>
       </p>
       <div className="input-group">
         <input
