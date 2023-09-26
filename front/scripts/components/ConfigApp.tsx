@@ -76,7 +76,7 @@ const App = () => {
       <div className="text-center my-5">
         <h6 className="mb-4">Bravo, c'est terminé !</h6>
         <button className="btn btn-link" onClick={(e) => setShowHelp(true)}>
-          Heu ... Où est-ce que je colle ce lien ?
+          Heu ... Où coller ce lien ?
         </button>
       </div>
       <HelpModal open={showHelp} onClose={(e) => setShowHelp(false)} />
