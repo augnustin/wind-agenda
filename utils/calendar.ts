@@ -41,7 +41,7 @@ export const generateCalendar = (
   { lat, lng }: Coords,
   preferences: UserPreferences
 ) => {
-  const cal = ical({ name: "Prévisions de vent", timezone: findTZ(lat, lng).at(0) });
+  const cal = ical({ name: "Wind Agenda", timezone: findTZ(lat, lng).at(0) });
 
   weatherDataGroups.forEach((weatherDataGroup) => {
     const start = weatherDataGroup.at(0).time;
