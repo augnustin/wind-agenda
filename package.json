@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "back": "nodemon --ignore ./cache --ignore ./front",
-    "front": "parcel serve front/index.html --public-url / --dist-dir dist",
-    "start": "yarn install && parcel build front/index.html --public-url $HOST / --dist-dir dist && ts-node index.ts"
+    "front": "parcel serve front/index.html --dist-dir dist",
+    "start": "yarn install && parcel build front/index.html --public-url $HOST --dist-dir dist && ts-node index.ts"
   },
   "dependencies": {
     "@parcel/transformer-sass": "2.9.3",
